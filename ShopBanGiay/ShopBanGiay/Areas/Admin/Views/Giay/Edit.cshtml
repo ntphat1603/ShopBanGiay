@@ -1,0 +1,79 @@
+﻿@model ShopBanGiay.Models.Giay
+
+@{
+    ViewBag.Title = "Sửa giày";
+}
+
+<div class="card mt-3">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "Giay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.HinhAnh)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NhaSanXuat_ID)
+                @Html.DropDownList("NhaSanXuat_ID", null, "-- Chọn --", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NhaSanXuat_ID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LoaiGiay_ID)
+                @Html.DropDownList("LoaiGiay_ID", null, "-- Chọn --", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LoaiGiay_ID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenGiay)
+                @Html.EditorFor(model => model.TenGiay, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenGiay, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DonGia)
+                @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Size)
+                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoLuong)
+                @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DuLieuHinhAnhBia)
+                <span class="d-block mb-2"><img src="~/@Model.HinhAnh" width="80" class="img-thumbnail" /></span>
+                <span class="d-block mb-2 mt-2 small text-danger">Bỏ trống nếu không muốn cập nhật ảnh mới!</span>
+                @Html.TextBoxFor(model => model.DuLieuHinhAnhBia, new { @class = "form-control-file", type = "file" })
+                @Html.ValidationMessageFor(model => model.DuLieuHinhAnhBia, "", new { @class = "text-danger" })
+                @if (!String.IsNullOrEmpty(ViewData.ModelState["UploadError"].Errors[0].ErrorMessage))
+                {
+                    <span class="d-block text-danger">@ViewData.ModelState["UploadError"].Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MoTa)
+                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mb-0">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" /> hoặc @Html.ActionLink("Quay về danh sách", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

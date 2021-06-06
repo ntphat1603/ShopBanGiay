@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ShopBanGiay.Models.Giay>
+
+@{
+    ViewBag.Title = "Sách";
+}
+
+<div class="card mt-3">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p><a class="btn btn-success" href="@Url.Action("Create")" role="button">Thêm mới</a></p>
+        <table class="table table-bordered table-hover table-sm mb-0">
+            <tr>
+                <th width="5%">#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenGiay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DonGia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoaiGiay.TenLoai)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NhaSanXuat.TenNhaSanXuat)
+                </th>
+                <th width="10%"></th>
+            </tr>
+            @{ int stt = 1; }
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>@stt</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenGiay)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.DonGia)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td class="text-center">
+                <img src="~/@item.HinhAnh" width="60" class="img-thumbnail" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiGiay.TenLoai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhaSanXuat.TenNhaSanXuat)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+                stt++;
+            }
+        </table>
+    </div>
+</div>

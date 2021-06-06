@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ShopBanGiay.Models.Giay>
+@{
+	ViewBag.Title = "Giỏ hàng";
+    var cart = (List<ShopBanGiay.Models.SanPhamTrongGio>)Session["cart"];
+}
+
+<div class="card mt-3">
+	<h5 class="card-header">@ViewBag.Title</h5>
+	<div class="card-body">
+        @if (cart.Count <= 0)
+        {
+            <span>Giỏ hàng chưa có sản phẩm!</span>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover table-sm">
+                <tr>
+                    <th width="5%">#</th>
+                    <th>Hình ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Size</th>
+                    <th width="10%">Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th width="5%"></th>
+                </tr>
+                @foreach (var item in cart)
+                {
+                    <tr>
+                        <td>#</td>
+                        <td><img src="~/@item.giay.HinhAnh" width="50" /></td>
+                        <td>@item.giay.TenGiay</td>
+                        <td>@item.giay.Size</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><a href="@Url.Action("CapNhatGiam", "GioHang", new { maSP = item.giay.ID })"><i class="fal fa-minus"></i></a></span>
+                                </div>
+                                <input type="text" class="form-control text-center" value="@item.soLuongTrongGio" readonly />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><a href="@Url.Action("CapNhatTang", "GioHang", new { maSP = item.giay.ID })"><i class="fal fa-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right">@item.giay.DonGia</td>
+                        <td class="text-right">@(item.soLuongTrongGio * item.giay.DonGia)</td>
+                        <td class="text-center"><a href="@Url.Action("XoaKhoiGio", "GioHang", new { maSP = item.giay.ID })">Xóa</a></td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5">Tổng thành tiền</td>
+                    <td class="text-right font-weight-bold text-primary">
+                        @{
+                            var total = cart.Sum(item => item.giay.DonGia * item.soLuongTrongGio);
+                        }
+                        @total
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Tiếp tục mua hàng</a>
+                <a href="@Url.Action("ThanhToan", "Home")" class="btn btn-success">Thanh toán</a>
+            </p>
+        }
+	</div>
+</div>

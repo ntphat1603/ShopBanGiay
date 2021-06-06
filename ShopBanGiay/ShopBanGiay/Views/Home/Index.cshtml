@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ShopBanGiay.Models.Giay>
+@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<div class="card mt-3">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="card-deck">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card list-shoes bg-info">
+                        <img src="~/@item.HinhAnh" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.TenGiay</h5>
+                            <p class="card-text">@item.DonGia</p>
+                            <h5 class="card">@item.Size</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a href="@Url.Action("ThemVaoGio", "GioHang", new { maSP = item.ID })" class="btn btn-danger">Giỏ hàng</a>
+                            <a href="@Url.Action("ChiTiet", "Home", new { maSP = item.ID })" class="btn btn-success">Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

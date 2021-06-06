@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NhanVien_ID" Type="int" />
+    <Property Name="KhachHang_ID" Type="int" />
+    <Property Name="DienThoaiGiaoHang" Type="nvarchar" MaxLength="20" />
+    <Property Name="DiaChiGiaoHang" Type="nvarchar" MaxLength="255" />
+    <Property Name="NgayDatHang" Type="datetime" />
+    <Property Name="TinhTrang" Type="smallint" />
+  </EntityType>
+  <EntityType Name="DatHang_ChiTiet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DatHang_ID" Type="int" />
+    <Property Name="Giay_ID" Type="int" />
+    <Property Name="SoLuong" Type="smallint" />
+    <Property Name="DonGia" Type="int" />
+  </EntityType>
+  <EntityType Name="Giay">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NhaSanXuat_ID" Type="int" />
+    <Property Name="LoaiGiay_ID" Type="int" />
+    <Property Name="TenGiay" Type="nvarchar" MaxLength="255" />
+    <Property Name="Size" Type="int" />
+    <Property Name="DonGia" Type="int" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" />
+    <Property Name="MoTa" Type="ntext" />
+  </EntityType>
+  <EntityType Name="KhachHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoVaTen" Type="nvarchar" MaxLength="100" />
+    <Property Name="DienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="TenDangNhap" Type="nvarchar" MaxLength="50" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LoaiGiay">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenLoai" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoVaTen" Type="nvarchar" MaxLength="100" />
+    <Property Name="DienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="TenDangNhap" Type="nvarchar" MaxLength="50" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="255" />
+    <Property Name="Quyen" Type="bit" />
+  </EntityType>
+  <EntityType Name="NhaSanXuat">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenNhaSanXuat" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_DatHang_ChiTiet_DatHang">
+    <End Role="DatHang" Type="Self.DatHang" Multiplicity="0..1" />
+    <End Role="DatHang_ChiTiet" Type="Self.DatHang_ChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DatHang_ChiTiet">
+        <PropertyRef Name="DatHang_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DatHang_ChiTiet_Giay">
+    <End Role="Giay" Type="Self.Giay" Multiplicity="0..1" />
+    <End Role="DatHang_ChiTiet" Type="Self.DatHang_ChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Giay">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DatHang_ChiTiet">
+        <PropertyRef Name="Giay_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DatHang_KhachHang">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
+    <End Role="DatHang" Type="Self.DatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DatHang">
+        <PropertyRef Name="KhachHang_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DatHang_NhanVien">
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
+    <End Role="DatHang" Type="Self.DatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DatHang">
+        <PropertyRef Name="NhanVien_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Giay_NhaSanXuat">
+    <End Role="NhaSanXuat" Type="Self.NhaSanXuat" Multiplicity="0..1" />
+    <End Role="Giay" Type="Self.Giay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhaSanXuat">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Giay">
+        <PropertyRef Name="NhaSanXuat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sach_LoaiSach">
+    <End Role="LoaiGiay" Type="Self.LoaiGiay" Multiplicity="0..1" />
+    <End Role="Giay" Type="Self.Giay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiGiay">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Giay">
+        <PropertyRef Name="LoaiGiay_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopOnlineModelStoreContainer">
+    <EntitySet Name="DatHang" EntityType="Self.DatHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DatHang_ChiTiet" EntityType="Self.DatHang_ChiTiet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Giay" EntityType="Self.Giay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoaiGiay" EntityType="Self.LoaiGiay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhaSanXuat" EntityType="Self.NhaSanXuat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DatHang_ChiTiet_DatHang" Association="Self.FK_DatHang_ChiTiet_DatHang">
+      <End Role="DatHang" EntitySet="DatHang" />
+      <End Role="DatHang_ChiTiet" EntitySet="DatHang_ChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DatHang_ChiTiet_Giay" Association="Self.FK_DatHang_ChiTiet_Giay">
+      <End Role="Giay" EntitySet="Giay" />
+      <End Role="DatHang_ChiTiet" EntitySet="DatHang_ChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DatHang_KhachHang" Association="Self.FK_DatHang_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DatHang" EntitySet="DatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DatHang_NhanVien" Association="Self.FK_DatHang_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanVien" />
+      <End Role="DatHang" EntitySet="DatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Giay_NhaSanXuat" Association="Self.FK_Giay_NhaSanXuat">
+      <End Role="NhaSanXuat" EntitySet="NhaSanXuat" />
+      <End Role="Giay" EntitySet="Giay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sach_LoaiSach" Association="Self.FK_Sach_LoaiSach">
+      <End Role="LoaiGiay" EntitySet="LoaiGiay" />
+      <End Role="Giay" EntitySet="Giay" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
